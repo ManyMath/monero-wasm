@@ -1,0 +1,30 @@
+[package]
+name = "monero-wasm"
+version = "0.0.1"
+authors = ["sneurlax <sneurlax@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+wasm-bindgen = "0.2.84"
+
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+#
+# This is a holdover from https://github.com/rustwasm/wasm-pack-template .
+console_error_panic_hook = { version = "0.1.7", optional = true }
+monero-rust = { version = "0.0.4-dev.1", path = "../monero-rust" }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.34"
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"
